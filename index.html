@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project: Library</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="./script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="side-img">
+      <img src="./img/sidebag-image.jpg" alt="image of a Library" />
+    </div>
+    <main>
+      <header>
+        <h1>Library</h1>
+      </header>
+      <div>
+        <div class="toggle-view">
+          <button class="view-books-btn">Books</button>
+          <button class="view-form-btn">Add books</button>
+        </div>
+        <div class="view-container">
+          <form action="#">
+            <h2>Book Details</h2>
+            <div>
+              <label for="bookTitle">Book name:</label>
+              <input required type="text" name="bookTitle" id="bookTitle" />
+            </div>
+
+            <div>
+              <label for="bookAuthor">Book author:</label>
+              <input required type="text" name="bookAuthor" id="bookAuthor" />
+            </div>
+
+            <div>
+              <label for="numOfPages">Number of pages:</label>
+              <input required type="number" name="numOfPages" id="numOfPages" />
+            </div>
+
+            <div>
+              <label for="readStatus">Reading status?</label>
+              <select required name="readStatus" id="readStatus">
+                <option value="" disabled selected hidden>
+                  Select status...
+                </option>
+                <option value="done">Done</option>
+                <option value="unread">Unread</option>
+                <option value="reading">Reading</option>
+                <option value="onHold">On-hold</option>
+              </select>
+            </div>
+            <div>
+              <label for="bookSummary">Book summary</label>
+              <textarea
+                name="bookSummary"
+                id="bookSummary"
+                rows="4"
+                cols="40"
+              ></textarea>
+            </div>
+            <div class="btn-container">
+              <button type="submit">Submit</button>
+              <button type="reset">Clear fields</button>
+            </div>
+          </form>
+          <div class="book-container">
+            <table>
+              <thead>
+                <td>Title</td>
+                <td>Author</td>
+                <td>Number of pages</td>
+                <td>Status</td>
+                <td>Edit</td>
+              </thead>
+              <tbody>
+                <!-- <tr>
+                  <td>Title</td>
+                  <td>Author</td>
+                  <td>Number of pages</td>
+                  <td>
+                    Status
+                  </td>
+                  <span><img src="./img/edit-button.svg" /></span>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
