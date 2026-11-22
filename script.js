@@ -4,6 +4,8 @@ const formElem = document.querySelector("form");
 const bookContainer = document.querySelector(".book-container");
 const tbodyElem = document.querySelector("tbody");
 const table = document.querySelector("table");
+const modal = document.querySelector(".modal");
+
 const myLibrary = [
   {
     bookTitle: "Lord of the Mysteries",
@@ -29,6 +31,11 @@ const enumValue = Object.freeze({
   rereading: "Re-reading",
   onHold: "On-hold",
 });
+
+const modalMessage = {
+  add: "New Book Added!",
+  edit: "Read status updated!",
+};
 
 viewFormBtn.addEventListener("click", () => {
   viewBooksBtn.classList.remove("active");
@@ -62,6 +69,7 @@ formElem.addEventListener("submit", (e) => {
   const formData = new FormData(formElem);
   const data = Object.fromEntries(formData);
   addBookToLibrary(data);
+  showModal(modal, modalMessage.add);
   renderBooks();
   formElem.reset();
 });
@@ -94,6 +102,7 @@ function addBookToLibrary(data) {
   );
 
   myLibrary.push(newBook);
+  showModal(modal);
 }
 
 function createBookRows(arr) {
@@ -166,10 +175,20 @@ table.addEventListener("click", (e) => {
     return;
   } // this condition checks if there is a select button
   //The not operator creates a select button if the select is undefined and returns immediately
-
   bookObj.readStatus = enumValue[select.value];
   rowStatusCell.textContent = bookObj.readStatus;
+  showModal(modal, modalMessage.edit);
   e.target.closest("img").setAttribute("src", "./img/edit-button.svg");
 });
 
+function showModal(elem, message) {
+  elem.querySelector(".message").textContent = message
+    ? message
+    : "Operation successful!";
+  elem.classList.add("showModal");
+
+  setTimeout(() => {
+    elem.classList.remove("showModal");
+  }, 3000);
+}
 renderBooks();
