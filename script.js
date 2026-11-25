@@ -73,32 +73,46 @@ formElem.addEventListener("submit", (e) => {
   renderBooks();
   formElem.reset();
 });
+class Book {
+  constructor(title, author, numOfPages, readStatus, summary) {
+    this.bookTitle = title;
+    this.bookAuthor = author;
+    this.numOfPages = numOfPages;
+    this.readStatus = readStatus;
+    this.summary = summary;
+    this.id = crypto.randomUUID();
+  }
 
-function Book(title, author, numOfPages, readStatus, summary) {
-  this.bookTitle = title;
-  this.bookAuthor = author;
-  this.numOfPages = numOfPages;
-  this.readStatus = readStatus;
-  this.summary = summary;
-  this.id = crypto.randomUUID();
+  set readStatus(value) {
+    this._readStatus = value;
+  }
+
+  get readStatus() {
+    return this._readStatus;
+  }
+
+  get showBookSummary() {
+    return `The book '${this.bookTitle}' by ${this.bookAuthor} is a ${this.numOfPages}-page story. ${this.summary ?? ""}`;
+  }
 }
-Book.prototype.setReadStatus = function (val) {
-  this.readStatus = val;
-};
-Book.prototype.getSummary = function () {
-  return `The book '${this.title}' by ${this.author} is a ${this.numOfPages} long page story. ${this.summary ?? ""}`;
-};
+
+// function Book(title, author, numOfPages, readStatus, summary) {
+//   this.bookTitle = title;
+//   this.bookAuthor = author;
+//   this.numOfPages = numOfPages;
+//   this.readStatus = readStatus;
+//   this.summary = summary;
+//   this.id = crypto.randomUUID();
+// } Remove this function to accomodate classes
 
 function addBookToLibrary(data) {
-  const { bookTitle, bookAuthor, numOfPages, readStatus, bookSummary, id } =
-    data;
+  const { bookTitle, bookAuthor, numOfPages, readStatus, bookSummary } = data;
   const newBook = new Book(
     bookTitle,
     bookAuthor,
     numOfPages,
     readStatus,
     bookSummary,
-    id,
   );
 
   myLibrary.push(newBook);
@@ -108,8 +122,7 @@ function addBookToLibrary(data) {
 function createBookRows(arr) {
   const frag = document.createDocumentFragment();
   arr.forEach((item) => {
-    const { bookTitle, bookAuthor, numOfPages, readStatus, bookSummary, id } =
-      item;
+    const { bookTitle, bookAuthor, numOfPages, id } = item;
 
     // creating elements
     const tr = document.createElement("tr");
@@ -125,7 +138,7 @@ function createBookRows(arr) {
     titleTd.textContent = bookTitle;
     authorTd.textContent = bookAuthor;
     numOfPageTd.textContent = numOfPages;
-    statusTd.textContent = enumValue[readStatus];
+    statusTd.textContent = enumValue[item.readStatus];
     statusTd.setAttribute("class", "status-td");
     span.appendChild(img);
     img.setAttribute("src", "./img/edit-button.svg");
@@ -175,8 +188,9 @@ table.addEventListener("click", (e) => {
     return;
   } // this condition checks if there is a select button
   //The not operator creates a select button if the select is undefined and returns immediately
-  bookObj.readStatus = enumValue[select.value];
-  rowStatusCell.textContent = bookObj.readStatus;
+
+  bookObj.readStatus = select.value ? select.value : bookObj.readStatus;
+  rowStatusCell.textContent = enumValue[bookObj.readStatus];
   showModal(modal, modalMessage.edit);
   e.target.closest("img").setAttribute("src", "./img/edit-button.svg");
 });
